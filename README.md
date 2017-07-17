@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/fcya1k80q0lhvx3y?svg=true)](https://ci.appveyor.com/project/MaverickTse/aviutlmanualtracking)
+
 # AviUtlManualTracking
 a cursor location logger to assist object tracking in AviUtl
 
