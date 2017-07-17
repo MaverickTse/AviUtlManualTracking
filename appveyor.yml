@@ -1,4 +1,5 @@
 version: '{build}'
+skip_tags: true
 image: Visual Studio 2015
 
 platform:
@@ -34,11 +35,11 @@ artifacts:
 
 deploy:
   release: ManualTracking-v$(APPVEYOR_BUILD_VERSION)
-  description: 'Buildbot automatic release ZIP archive'
+  description: 'Buildbot automatic release ZIP archive for commit %APPVEYOR_REPO_COMMIT%'
   provider: GitHub
   auth_token:
     secure: CUlkSM2u6E2ezTpCextXuFXjXVRqU72U9FDN0w1CU+NInoxi0l51+gDyf9G/a+q8
   artifact: /.*\.zip/
   on:
     branch: master
-    appveyor_repo_tag: true
+    
