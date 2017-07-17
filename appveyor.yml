@@ -1,0 +1,44 @@
+version: '{build}'
+image: Visual Studio 2015
+
+platform:
+  - Win32
+
+configuration:
+  - Release
+
+init:
+  - cmd: cmake --version
+  - cmd: msbuild /version
+
+branches:
+  only:
+    - master
+
+before_build:
+  - cmd: cd C:\projects\AviUtlManualTracking
+  - cmd: md build
+  - cmd: cd build
+  - cmd: if "%platform%"=="Win32" set CMAKE_GENERATOR_NAME=Visual Studio 14 2015
+  - cmd: cmake -G "%CMAKE_GENERATOR_NAME%" -DCMAKE_BUILD_TYPE=%configuration%
+
+build:
+  verbosity: minimal
+
+after_build:
+  - cmd: 7z a ManualTracking.zip %APPVEYOR_BUILD_FOLDER%\build\%configuration%\ManualTracking.auf README.md LICENSE
+
+artifacts:
+  - path: '**\*.zip'
+    name: ManualTracking Win32 Plugin Package
+
+deploy:
+  release: ManualTracking-v$(APPVEYOR_BUILD_VERSION)
+  description: 'Buildbot automatic release ZIP archive'
+  provider: GitHub
+  auth_token:
+    secure: CUlkSM2u6E2ezTpCextXuFXjXVRqU72U9FDN0w1CU+NInoxi0l51+gDyf9G/a+q8
+  artifact: /.*\.zip/
+  on:
+    branch: master
+    appveyor_repo_tag: true
