@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/fcya1k80q0lhvx3y?svg=true)](https://ci.appveyor.com/project/MaverickTse/aviutlmanualtracking)
+[![Build status](https://ci.appveyor.com/api/projects/status/fcya1k80q0lhvx3y?svg=true)](https://ci.appveyor.com/project/MaverickTse/aviutlmanualtracking)    [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f4a642c7be7849fca7418bb69c9d32d4)](https://www.codacy.com/app/MaverickTse/AviUtlManualTracking?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MaverickTse/AviUtlManualTracking&amp;utm_campaign=Badge_Grade)
 
 # AviUtlManualTracking
 a cursor location logger to assist object tracking in AviUtl
@@ -7,6 +7,7 @@ a cursor location logger to assist object tracking in AviUtl
 When a video is loaded and the plugin is activated, it records the cursor position relative to the video. Top left of the video is seen as (0,0) with positive width and positive height. Besides coordinate, it also logs SIZE(width and height) and ROTATION(as degree). The __Region-of-Interest(ROI)__ is visualized using a bounding box with customizeable color. The data is continuously written into a CSV file to avoid excessive memory consumption.
 
 ## Building
+0. __Just get it from the Release page! Do the following if you are a developer__
 1. Install CMake, VS2015/VS2017
 2. Use CMake-gui to generate a VisualStudio solution
 3. Open up the solution, choose "Release" configuration, then press F7 to build
