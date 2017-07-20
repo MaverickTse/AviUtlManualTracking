@@ -25,21 +25,48 @@ When a video is loaded and the plugin is activated, it records the cursor positi
 4. Left-click on the center of ROI, a green box should appear
 5. Press :arrow_right: to play through frames, __move your mouse__ to follow the ROI __at the same time__
 6. [optional] if the ROI twisted significantly, press :arrow_up: or :arrow_down: to rotate the bounding box. __If you use this feature, please disable the AviUtl shortcut-key association for these two buttons.__
-7. Continue until you are done or missed or the ROI change size or rotation or location abruptly
+7. Continue until you are done/missed/ROI change abruptly/ROI disappear
 8. Left-click again to stop recording
 9. You may either:
+ * Save the data by clicking the Save CSV button (recommended)
  * Move back a few frames and Goto 4 again
- * Save the data by clicking the Save CSV button
  * Discard the logged data by clicking Clear Memory __(the logged data presist until you click Clear Memory or manually delete a CSV file after you close AviUtl)__
 10. Use program of your choice to analyze and transform the data to your heart's content
 11. Give me a job
 
 ## Conversion to EXO
-Whenever I write a tracking plugin, I find myself reimplementing the same EXO conversion part again and again... so this time I won't build it into the plugin. Later either me or somebody else may fill that gap. Python or R would be a good tool for the job as they are rich in maths and stat libraries.
+The inlcuded python script, csv2exo.py can be used to generate EXO from the saved CSV.
+
+__REQUIREMENT:__ Anaconda 4.4 or above (Vanilla Python3 will not run as it use Numpy, PANDAS, etc extensively)
+
+To save EXO for __Japanese__ exedit use, at minimal:
+```
+python3 csv2exo.py C:\path\to\your.csv --width=1280 --height=720 --fps=30
+```
+For __English-modded__ version, use:
+```
+python3 csv2exo.py C:\path\to\your.csv --width=1280 --height=720 --fps=30 --eng
+```
+The script would perform extensive calculation on the tracked data in order to cut down on data points. To see if the simplified points resemble the original data prior saving __(HIGHLY RECOMMENDED)__, use:
+```
+python3 csv2exo.py C:\path\to\your.csv --preview
+```
+This would generate a 3D-plot with two lines. The more they overlap, the better, but usually retaining more data points. The major parameter for the good-of-fitness and point count trade-off is ```--simplify```. By default I set it to 1.0. You can try a range of values __from 0.0 to 5.0__, but over-simplification would often occur beyond 4.0.
+
+The second factor is ```--smooth```, which is the window size of running-average. Does not affect much usually, unless the original line is really noisy. Deafult to 3.
+
+
+Each CSV would generate ONE and ONLY ONE object on layer 1, with multiple mid-points in-between.
+
+## More EXO Tips
+- the conversion script supports a target frame size and fps different from the original one: ```--new_width --new_height --new_fps```
+- The AviUtl installer bundled an EXOStacker program in the /AviUtlInstalledFolder/Utility folder. Use it to combine all your saved EXOs from the same project. Suggest also include an EXO that holds your video, then all video and tracking data can be merged in one-go
+- The script implemented Visvalingam-Whyatt polyline simplification using 3D-points (x, y, frame number)
+
 
 ## CSV Format
 The CSV file does not have title. The fields are:
 
 ```Frame no., x, y, width, height, rotation(degree)```
 
-Frame no. are not unique, while rotation should be within 0 and 359
+Frame no. are not unique, while rotation should be within ±0 ~ 359
