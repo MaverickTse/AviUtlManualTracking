@@ -27,7 +27,7 @@ build:
   verbosity: minimal
 
 after_build:
-  - cmd: 7z a ManualTracking.zip %APPVEYOR_BUILD_FOLDER%\build\%configuration%\ManualTracking.auf %APPVEYOR_BUILD_FOLDER%\README.md %APPVEYOR_BUILD_FOLDER%\LICENSE
+  - cmd: 7z a ManualTracking.zip %APPVEYOR_BUILD_FOLDER%\build\%configuration%\ManualTracking.auf %APPVEYOR_BUILD_FOLDER%\README.md %APPVEYOR_BUILD_FOLDER%\LICENSE %APPVEYOR_BUILD_FOLDER%\csv2exo.py
 
 artifacts:
   - path: '**\*.zip'
